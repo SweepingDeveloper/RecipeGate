@@ -1,0 +1,141 @@
+Developer Notes:
+
+11/10/2024:  Finished creating the first draft of the recipe format, and linking it to a database.  Took about 3 hours.
+11/11/2024:  Started work on the Login Screen.  Took about an hour.
+11/12/2024:  Streamed a bit of my progress.  Working on connecting the databases.  Had to use ChatGPT to process the login.
+			 Having trouble with the encryptString function; PHP won't recognize it.  So that was another hour.  Stopped at
+			 around 7PM, because I have work at 7AM tomorrow.
+			 
+			 Per ChatGPT, here's what I want to do in the future:
+			 
+			 1. Fix the login issues, possibly remove the need for the encryptString() function.  Consider decrypting them before
+				making the prepared statements.  Use plenty of echos to spot the issue.
+			 2. Make a logout feature, so users can log out.
+			 3. Create a Sign Up feature, and include age limits and password requirements.
+			 4. Create a Profile page in order to create the Delete Account feature.
+			 
+			 For the next few weeks, just focus on this, before you work on the recipe part of the website.  Get the login system right first.
+			 Once you get the login system right, then outline, outline, outline concerning posting and sharing recipes.  This will be a 
+			 long journey.  Embrace each step.
+			 
+			 Oh, and here's some ideas for future projects:
+			 
+			 * A website displaying housing prices in America in the form of Monopoly values.  Get a list of all counties in the USA, and get 
+			   median housing prices, median rents, etc.  Consider finding an API of that data and some geographical information, they probably
+			   have that for election maps anyway.
+
+11/13/2024:  Finally got the encryptString issue resolved.  Now I can log in.  Now I just need to figure out how I can display the username!  $_SESSION
+			 is still undefined when you go into the main page.  I spent about half an hour on it.  Probably gonna stop for now.
+			 6:20PM  OK seriously, stop.  You've done enough for now.  Think about your regular job!
+			 
+11/17/2024:	 Huge hurdle overcame:  Don't call a function encryptString() because there's already a function of that name.  I changed it, and now it works
+			 beautifully.  Got the log out function working.  Started the skeleton for the signup code.  Took about an hour for everything, maybe an hour
+			 and a half.
+			 
+11/24/2024:  Started at 8:17AM.  Stopped at 8:46AM.  Apparently having some issues with the CSS.  It worked last time.  At least I've made progress on the
+			 HTML of the Signup form, which wasn't too hard.  I think I'm going to stop for now.
+			 
+			 Started again at 1:06PM to begin troubleshooting.  Fixed the issue, and stopped at 1:16PM.  Check video for details.
+			 Started again at around 1:48PM to add a new recipe to the database.  Got a few issues with the trailing zeroes in the quantities, want to clean that up.
+			 Stopped at 3:22PM.  The sign up credential checks work, but I can't send an email to Gmail beacuse of security issues.
+11/25/2024:  Started at 9:44AM.  I plan on doing this off and on.  OK, stopped at 9:58AM.  Don't want to use the Internet too much right now.
+			 Restarted at 11:00AM, off and on.  Paused at 11:14AM.
+			 Restarted at 1:25PM, off and on I might add.  Stopped at 2:06PM.  I have completed a good portion of the login and sign up screens.  Now what I need to
+			 do is figure out a "Forgot Password" page that doesn't require an email.  I still need to think on that.
+			 Let's see, 14 minutes, 14 minutes, 41 minutes, so about an hour.
+			 Developer Notes moved to separate file.
+			 
+			 So, future tasks:
+			 
+			 1. Create A "Forgot Password" page that doesn't require email.
+			 2. Create a Profile page in order to create the Delete Account feature.
+			 
+			 In addition, before I even start on editing recipes, I must create an admin page in order to ban users.
+			 
+			 Restarted at 5:17PM?  Stopped at 5:32PM.
+
+11/27/2024:  Started at 5:46PM for a little bit.  Stopped at 5:49PM.
+
+12/ 1/2024:  Started at 4:28PM.  Paused at 5:28PM.  I'm probably going to stop for now (at 5:38PM).  Made some good progress.  I'm working on the Settings screen, 
+			 and making new .php files for repeating code, such as modals, and login_process.
+		
+12/ 3/2024:  Started at 6:28PM.  Stopped at 7:01PM.  (Good thing I stopped.  I would have gone all night.)  Anyway, repeating code works, changing the given name works,
+			 and I'm able to delete accounts.  However, I need to give a message saying that the username/password combo is not found.  So that's something to
+			 work on next time.  So...33 minutes?  Not bad.
+			 
+12/ 4/2024:  Started at 4:59PM.  Paused at 5:36PM.  Resumed at 5:37PM.  After a short pause, stopped at 5:59PM.  Decided to revert to the old code from the flash drive,
+			 because PHP's having issue with the headers.  A new file has been made for reference, login_process_alt.php.
+			 
+12/13/2024:  Started at around 5:30PM.  Already found an issue:  I didn't test for duplicate usernames.  Paused at 5:40PM.  Resumed at 5:45PM.
+			 A few off and ons later, Finished at 6:56PM.  I think I've gotten a handle on the login screen, everything should work.  If not, I can fix it.  Now I feel 
+			 comfortable with starting on the recipe editing feature.  I know I'll need to go back to the login screen to integrate email into it, but for now, the bare
+			 bones pretty much work.  I think I'll stop for tonight.  Let's see, this took about 80 minutes?  Not bad.
+			 
+12/14/2024:  I'm starting to write notes on physical paper on the format of the recipe editor, and then I'll probably stop for today.  I'm not timing this, I'm just brainstorming 
+             ideas.  I also want to brainstorm how to make a condensed display, that is expandable upon clicking.  
+			 
+			 So, future tasks:
+			 
+			 1. Create the skeleton for the recipe editor.
+			 2. Alphabetize the Tag names.
+			 3. Make a profile page for your recipes.
+			 4. Make a feature on the front page where users can select certain tags, and certain recipes will pop-up.  Like a search page.
+			 5. Add likes and dislikes.  Add comments.
+			 6. Add the ability to flag recipes for being inappropriate (such as recipes for illegal substances) 
+			 7. Add the ability to follow and unfollow people.
+			 8. Add the Terms of Service and Privacy Policy Pages.
+			 9. Add an About Page.
+			10. Port it to a new hosting service.
+			
+12/15/2024:  Started at 3:23PM.  Worked off and on.  Stopped at 4:51PM.  Got the skeleton of the Insert Recipe page form done.  I'm a little winded now.  Took about 80 minutes.
+
+12/16/2024:  Started at around 5:04PM.  Playing with C# for another project, while dabbling with RecipeGate.
+			 6:23PM: tag addition and subtraction work.  You can even have 0 tags if you want!
+			 Ended at 6:48.  Ingredient additions and subtractions work.  Next time (Lord willing), work on the CSS!
+			 So, tonight's session took 1 hour 44 minutes, give or take a few minutes.  I was even in the zone, once I figured out a few things!  But that's enough coding for 
+			 tonight, especially since it's a school night.
+			 
+12/17/2024:  Started at 5:12PM.  Paused, after being off a few minutes, at 5:38PM.
+			 Resumed at 5:45PM.  Stopped at 6:45PM.  I got started with the recipe_process page by extracting all the fields, which are variable.  Next time is the fun part,
+			 actually putting it into the database, yay!  Let's see...26 minutes less about 5 minutes, then a whole hour.  So, I'd say, 1 hour 21 minutes tonight.
+			 The next part is going to take a while, so that's why I'm stopping a little early.
+			 
+			 (So far, the whole development of this website has taken me 18 hours and 53 minutes, over a period of 5 weeks and 2 days, which is a rate of about 214.35 minutes
+			 per week, or about 3 and a half hours a week.  Yes, it's a slow start, but it's better than nothing.  I can bump that up to about 7.5 hours a week if I keep up this
+			 current pace. 
+			 
+			 ChatGPT tells me that for one person to finish this website, it would require between 300 and 400 hours, equivalent to 8-10 weeks of full-time work. So far, I'm at less
+			 than one week.  Let's see how it goes!
+			 
+12/18/2024:  Started at 4:58PM.  Off and on.  Paused at 5:32PM for supper.  Restarted at 5:46PM.
+             6:02PM :  After fixing the syntax errors, I'm super surprised it worked the first time! WOW!
+			 Stopped at 6:12PM.  I think my next task is to work more on the like/dislike/flag buttons (I made a div tag for that), as well as an expand/contract button 
+			 (use &blacktriangledown and $blacktriangle).  I'm at a decent stopping point.  Took about 55 minutes tonight.
+			 
+12/22/2024:  Started at 12:48PM. Off and on.  Stopped at 1:35PM for now.  Took about 40 minutes.
+			 Restarted at 3:23PM, off and on (I'm also installing GMod).  Stopped at 3:27PM.  4 minutes.
+			 
+			 Next time:  Go over your old code, and introduce JQuery AJAX to process the "likes" without exiting the page.
+			 
+			 Restarted at around 3:38PM.  Stopped at 4:53PM.  Programmed the like button to at least work.  And yes, you can like your own recipes.  Why not?  If YOU think it's
+			 a banger, it still counts.  Took about 70 minutes.  Total:  114 minutes.
+			 
+12/23/2024:  Started at 12:38PM.  Paused at 1:02PM.   24 minutes.
+			 Resumed at 1:08PM.  Stopped at around 1:12 or 1:17PM.  Probably not going to continue today; too much to do for the holidays.   4 minutes.
+			 Resumed at 2:03PM.  Apparently, not too much to do.  Let's continue.  Paused at 2:58PM.  Flag button done.  About 50 minutes.
+			 
+			 Before we continue, let's go over what we need to do:
+			 
+			 1. Generate a complaint report for the admins (I'll probably do part of this and then stop today.)
+			 2. Add in an "Original Author" field on the Insert Recipe modal.
+			 3. Make a profile page for users.  Allow people to follow their favorite users.
+			 4. Make a search feature for certain recipes and categories.
+			 5. Put more recipes in the database.  In fact, generate a Python program to do just that (that would be fun!)
+			 6. Make a "Next Page" or "Previous Page" for recipies.
+			 7. Tweak the recipe algorithm.
+			 8. Make an About page, a Terms of Use page, and a Privacy Policy page.
+			 9. I think that's it!  By then, it should be ready to publish!
+			 
+			 OK, I think I'm done for today.  Too much that may have to be done today.  Total time:  78 minutes.
+			 
+			 Ok, MAYBE resumed at 6:35PM.  Now done at 7:11PM.  That took about 30 minutes.  Total time: 108 minutes.
