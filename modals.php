@@ -309,13 +309,15 @@
 						echo '</select><br></div>';
 					}
 				
-					echo '<br><div class="alter_buttons"><a class="alter_button" onclick="clickAddTag()">Add Tag</a>  <a class="alter_button" onclick="clickRemoveTag()">Delete Tag</a></div><br><br>';
+					echo '<br><div class="alter_buttons"><a class="alter_button" onclick="clickAddTag(); return false">Add Tag</a>  <a class="alter_button" onclick="clickRemoveTag(); return false">Delete Tag</a></div><br><br>';
 				
 			
 				?>
 
 
-				
+				<label for="original_author"><b>Original Author</b></label>
+				<input type="text" class="redo" name="original_author">
+				<br><br>
 
 				<label for="prep_time"><b>Prep Time</b></label>
 				<select name="prep_time">
@@ -385,7 +387,7 @@
 				?>
 				<br>
 				<div class="alter_buttons">
-				<a class="alter_button" onclick="clickAddIngredient()">Add Ingredient</a>  <a class="alter_button" onclick="clickRemoveIngredient()">Delete Ingredient</a>
+				<a class="alter_button" onclick="clickAddIngredient(); return false">Add Ingredient</a>  <a class="alter_button" onclick="clickRemoveIngredient(); return false">Delete Ingredient</a>
 				</div>
 				<br><br>
 				
@@ -417,7 +419,7 @@
 				?>
 				<br>
 				<div class="alter_buttons">
-				<a class="alter_button" onclick="clickAddDirection()">Add Direction</a>  <a class="alter_button" onclick="clickRemoveDirection()">Delete Direction</a>
+				<a class="alter_button" onclick="clickAddDirection(); return false">Add Direction</a>  <a class="alter_button" onclick="clickRemoveDirection(); return false">Delete Direction</a>
 				</div>
 				<br><br>
 				

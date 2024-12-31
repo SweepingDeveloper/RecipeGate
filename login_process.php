@@ -25,9 +25,22 @@ require "mysql_login.php";
 		$given_name = $row['given_name'];
 		$user_id = $row['id'];
 		$admin_status = $row['admin_status'];
+		$ban_status = $row['ban_status'];
 
+		$banned = false;
+		
+		
+		//Generate today's date.
+		//https://stackoverflow.com/questions/1995562/now-function-in-php
+		$today = date_create(date("Y-m-d"));			
+		$ban_release = date_create($ban_status);
+
+		
+
+
+		
 		// Verify the password
-		if ($password == $hashed_password)
+		if ($password == $hashed_password and $ban_release <= $today)
 		{
 			#if (password_verify($password, $hashed_password)) {
 			// Password is correct, start a session or set a cookie
@@ -38,23 +51,14 @@ require "mysql_login.php";
 			$_SESSION['username'] = $username; // Store the username in the session
 			$_SESSION['given_name'] = $given_name;  //  Store the given name in the session
 			$_SESSION['user_id'] = $user_id; //Store the user id in the session
+			$_SESSION['admin_status'] = $admin_status;
 			
-			if ($admin_status == 1)
-			{
-				$bill_chooser = rand(0,sizeof($admins)-1);
-				$_SESSION['admin_status'] = $admins[$bill_chooser];
-			}
-			else
-			{
-				$bill_chooser = rand(0,sizeof($non_admins)-1);
-				$_SESSION['admin_status'] = $non_admins[$bill_chooser];
-			}
 
 			$login_message = "Login successful.";
 			header('Location: index.php');
 			//echo '<div class="loginTitle">Login successful.  <a href="index.php">Click here</a> to return to the main page.</div>';
 		} 
-		else 
+		else if ($ban_release <= $today)
 		{
 			$login_message = "Invalid username or password.";
 			echo '<br><br>
@@ -82,6 +86,34 @@ require "mysql_login.php";
 						';
 			
 			//echo '<div class="loginTitle">Invalid username or password.</div>';
+		}
+		else
+		{
+			$login_message = "You are under a ban until ".$ban_release->format('m-d-Y').".  To appeal, please email me if and when I get a new email.";
+			echo '<br><br>
+					<form class="defForm" action="login_process.php" method="post">
+			
+							<div class="container">
+								
+								<div class="loginTitle">Login To RecipeGate</div>
+								<br>
+								<label for="loginMessage"><div class="loginMessage">'.$login_message.'</div></label>
+							</div>
+							<div class="defContainer">
+								<input class="hiddenInput" name="formType" value="login"> 
+								<label for="username"><b>Username</b></label>
+								<input class="redo" type="text" placeholder="Enter Username" name="username" required>
+								<label for="password"><b>Password</b></label>
+								<input class="redo" type="password" placeholder="Enter Password" name="password" required>
+								<button class="longButton" type="submit">Login</button>
+								<br><br>
+							</div>
+						
+						
+						</form>
+						
+						';
+			
 		}
 	} 
 	else 

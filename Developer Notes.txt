@@ -139,3 +139,48 @@ Developer Notes:
 			 OK, I think I'm done for today.  Too much that may have to be done today.  Total time:  78 minutes.
 			 
 			 Ok, MAYBE resumed at 6:35PM.  Now done at 7:11PM.  That took about 30 minutes.  Total time: 108 minutes.
+			 
+12/28/2024:  Started at 10:27AM.  Stopped at 11:03AM.  Worked more on the Report Manager page and starting on the complaint processing code.
+		     Started at 4:14PM.  Paused at 4:40PM.  
+			 Resumed at 4:45PM, off and on.  Paused at 5:21PM.
+			 Resumed at 5:23PM.  Ened at 5:51PM.  Added the "Original Author" field as well as worked on the Report Manager page.  That should be finished by now.
+			 
+			 OK, Let's go over what we need to do next:
+			 
+			 3. Make a profile page for users.  Allow people to follow their favorite users.
+			 4. Make a search feature for certain recipes and categories.
+			 5. Put more recipes in the database.  In fact, generate a Python program to do just that (that would be fun!)
+			 6. Make a "Next Page" or "Previous Page" for recipies.
+			 7. Tweak the recipe algorithm.
+			 8. Make an About page, a Terms of Use page, and a Privacy Policy page.
+			 9. I think that's it!  By then, it should be ready to publish!
+
+			 Time wise:  36 minutes, 26 minutes	, 26 minutes, 28 minutes.  Total is 116 minutes, let's make that more like 110 for good measure.
+
+12/29/2024:  Started at 12:16PM.  Paused at 12:41PM.
+			 Resumed at  2:10PM.  Stopped at around 2:50PM.  
+			 Time wise: 25 + 40 minutes: 65 minutes.
+			 
+12/30/2024:  Not sure when I started.  Had to start over from the backup files.  So, let's just say about an hour.
+
+			 Next tasks to do:  Fix the redirect of the likes, and figure out how to keep it on the..you know
+			 what you can do next time?  Try to use an AJAX function to put the result in the HTML to show the updated like.
+			 Just a thought.
+			 
+			 Anyway, profile page is somewhat done.  You can at least "follow" your favorite recipe submitters.
+			 In Step 7, that's when you can actually show your favorites.  But first, we need more recipes!
+			 One step at a time, hoss.
+			 
+			 Next time:
+			 
+			 4. Make a search feature for certain recipes and categories.
+			 5. Put more recipes in the database.  In fact, generate a Python program to do just that (that would be fun!)
+			 6. Make a "Next Page" or "Previous Page" for recipies.
+			 7. Tweak the recipe algorithm.
+			 8. Make an About page, a Terms of Use page, and a Privacy Policy page.
+			 9. I think that's it!  By then, it should be ready to publish!
+
+12/31/2024:  Started at 3:44PM.  Ended at 3:49PM.  I don't really know where to begin with the search bar.
+			 What do I search for?  Tags?  Authors?  Recipes?  I need to do some more research before I continue.
+			 
+			 Oh, I also hid the follow button to those who are not logged in.

@@ -204,6 +204,8 @@ $num_directions = 3;
 				?>
 
 
+				<label for="original_author"><b>Original Author</b></label>
+				<input type="text" class="redo" name="original_author">
 				
 
 				<label for="prep_time"><b>Prep Time</b></label>

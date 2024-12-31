@@ -15,7 +15,7 @@
 	<?php
 			require "mysql_login.php";
 			require "encrypt_2025.php";
-			//error_reporting(0);
+			error_reporting(0);
 			//echo var_dump(get_defined_functions());
 			if (isset($_SESSION['username']))
 			{
@@ -37,9 +37,9 @@
 					if (isset($_SESSION['username']))
 					{
 						echo '<li><a href="settings.php">Settings</a></li>';
-						if (array_search($_SESSION['admin_status'], $admins))  
+						if ($_SESSION['admin_status'] == 1)  
 						{
-							echo '<li><a href="">Reports</a></li>';
+							echo '<li><a href="report_manager.php">Reports</a></li>';
 						}
 					}
 					

@@ -70,6 +70,8 @@ $recipe_title = $_POST['title'];
 $prep_time = $_POST['prep_time'];
 $serves = $_POST['serves'];
 
+$original_author = $_POST['original_author'];
+
 
 //Extract tag names.
 $stmt = $db->prepare('SELECT * FROM `test`.`tags` ORDER BY `id` ASC;');
@@ -83,14 +85,14 @@ while ($row = $result->fetch_assoc())
 
 
 //Insert initial values in the database.
-$stmt = $db->prepare('INSERT INTO `test`.`recipes` (`title`, `user_id`, `serves`, `prep_time`, `timestamp`) VALUES (?, ?, ?, ?, ?);');
-$stmt->bind_param("siiis", $recipe_title, $user_id, $serves, $prep_time, $now_format);
+$stmt = $db->prepare('INSERT INTO `test`.`recipes` (`title`, `user_id`, `serves`, `prep_time`, `original_author`, `timestamp`) VALUES (?, ?, ?, ?, ?, ?);');
+$stmt->bind_param("siiiss", $recipe_title, $user_id, $serves, $prep_time, $original_author, $now_format);
 $stmt->execute();
 $result = $stmt->get_result();
 
 //Grab new recipe id.
-$stmt = $db->prepare('SELECT `id` FROM `test`.`recipes` WHERE `title` = ? AND `user_id` = ? AND `serves` = ? AND `prep_time` = ? LIMIT 1;');
-$stmt->bind_param("siii", $recipe_title, $user_id, $serves, $prep_time);
+$stmt = $db->prepare('SELECT `id` FROM `test`.`recipes` WHERE `title` = ? AND `user_id` = ? AND `serves` = ? AND `prep_time` = ? AND `original_author` = ? LIMIT 1;');
+$stmt->bind_param("siiis", $recipe_title, $user_id, $serves, $prep_time, $original_author);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();

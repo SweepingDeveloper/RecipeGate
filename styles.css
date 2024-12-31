@@ -365,6 +365,25 @@ footer {
 	margin-top: 3px;
 }
 
+.profileTitle
+{
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+}
+
+.followBar
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	text-align: center;
+	width: 100%;
+}
+
+
 .message
 {
 	font-size: 20px;
@@ -407,6 +426,21 @@ footer {
 	background-color: #F5E1A9;
 	cursor: pointer;
 }
+
+
+.followButton {
+	width: auto;
+	background-color: #E7D282;
+	padding: 12px;
+	margin-top: 5px;
+}
+
+
+.followButton:hover, .followButton:focus {
+	background-color: #F5E1A9;
+	cursor: pointer;
+}
+
 
 .hiddenInput {
 	display: none;

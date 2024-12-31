@@ -14,6 +14,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 
 
 	require "modals.php";
+	
+	if (is_null($_SESSION['user_id']))
+	{
+		$user_id = 0;
+	}
+	else
+	{
+		$user_id = $_SESSION['user_id'];
+	}
+	
+	
+	
+	// This code is just in case a person has accessed it without specifying an id.  This should result in 0 recipes.
+	if ($_GET['profile_id'])
+	{
+		
+		$profile_id = $_GET['profile_id'];	
+
+	}
+	else
+	{
+		echo "Profile ID is not found";
+		$profile_id = 0;
+		
+	}
+
+	
+	
+	
+
 ?>
 
 	
@@ -27,6 +57,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 		
 
 		<?php
+		
+			$followed = false;
+			
+			$stmt = $db->prepare("SELECT * FROM `test`.`login` WHERE `id` = ?;");
+			$stmt->bind_param("i", $profile_id);
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$profile_row = $res->fetch_assoc();
+
+			$stmt = $db->prepare("SELECT * FROM `test`.`follows` WHERE `id_to` = ?;");
+			$stmt->bind_param("i", $profile_id);
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$follows_row = $res->fetch_assoc();
+			
+			$stmt = $db->prepare("SELECT * FROM `test`.`follows` WHERE `id_frm` = ? AND `id_to` = ? LIMIT 1;");
+			$stmt->bind_param("ii", $user_id, $profile_id);
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$is_follow_row = $res->fetch_assoc();
+			
+			
+			if (is_null($is_follow_row['id_frm']))
+			{
+				$followed = false;
+			}
+			else
+			{
+				$followed = true;
+			}
+
+
+			$stmt = $db->prepare("SELECT COUNT(`id_to`) AS 'count' FROM `follows` WHERE `id_to` = ?;");
+			$stmt->bind_param("i", $profile_id);
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$count_row = $res->fetch_assoc();
+	
+
+
+
+
+	
+			$followers = $count_row['count'];
+			
+			
+			
+			echo '<script>
+				function processFollow(from, name_from, to)
+				{
+					$.ajax({
+							url: "process_follows.php?from="+from+"&to="+to,
+							success: function(result) {
+								window.location.href = "profile.php?profile_id='.$profile_id.'";
+							}
+					
+						});
+				}
+			
+			</script>';
+			
+			
+			
+	
+			// Title
+			echo '<div class="container">
+						<div class="profileTitle">'.estring($profile_row['given_name']).'\'s Recipes</div>
+						<div class="followBar"><span class="followers">'.$followers.' followers</span><span class="followSpan">';
+						
+				if (isset($_SESSION['username']))
+				{
+					echo '<button class="followButton" onclick=\'processFollow('.$user_id.', "'.estring($profile_row['given_name']).'", '.$profile_id.')\'>';
+							
+					if ($followed)
+					{
+						echo 'Unfollow';
+					}
+					else
+					{
+						echo 'Follow';
+					}
+					echo '</button></span>';
+					
+				}
+				
+						
+				echo '</div></div>';
+
 
 			echo '<script>
 				function expandRecipe(r)
@@ -63,9 +181,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 
 			echo '<div id="all_else">';
 
-			echo '<div class="search_bar"></div>';
-
-
 			if (isset($_SESSION['username']))
 			{
 				echo '<p align="center"><div id="plus_button_id" class="plus_button" onclick="document.getElementById(\'recipeModal\').style.display=\'block\'; document.getElementById(\'plus_button_id\').style.display=\'none\'; document.getElementById(\'all_else\').style.display=\'none\'">+</div></p>';
@@ -74,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 			
 			
 			
-			$recipe_query = 'SELECT * FROM '.$db_name.'.`recipes`;';
+			$recipe_query = 'SELECT * FROM '.$db_name.'.`recipes` WHERE `user_id` = '.$profile_id.';';
 			$recipe_result = mysqli_query($db, $recipe_query) or die ('Error querying recipes.');  
 			while ($recipe_row = mysqli_fetch_array($recipe_result))
 			{
@@ -93,12 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 
 				if (empty($recipe_row['original_author']) or $recipe_row['original_author'] == '')
 				{
-					echo '<div class="author_title">by <a href="profile.php?profile_id='.$recipe_row['user_id'].'">'.encryptString($author_row['given_name']).'</a></div>';
+					echo '<div class="author_title">by '.encryptString($author_row['given_name']).'</div>';
 				}
 				else
 				{
 					echo '<div class="author_title">by '.$recipe_row['original_author'].'
-					<br>submitted by <a href="profile.php?profile_id='.$recipe_row['user_id'].'">'.encryptString($author_row['given_name']).'</a></div>';
+					<br>submitted by '.encryptString($author_row['given_name']).'</div>';
 				}
 				
 				
@@ -191,12 +306,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 								if (result == 1)
 								{
 									alert("Like submitted!");
-									window.location.href = "index.php";
 								}							
 								else
 								{
 									alert("Unlike submitted!");
-									window.location.href = "index.php";
 								}
 								
 
