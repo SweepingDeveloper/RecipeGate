@@ -9,6 +9,7 @@ require "modals.php";
 $num_tags = 3;
 $num_ingredients = 3;
 $num_directions = 3;
+$isEditable = false;
 ?>
 
 <main>
@@ -127,7 +128,7 @@ $num_directions = 3;
 				<input class="hiddenInput" name="formType" value="insert_recipe"> 
 				
 				<label for="title"><b>Title</b></label>
-				<input class="redo" type="text" placeholder="Enter Title" name="title" required>
+				<input class="redo" id="recipeTitle" type="text" placeholder="Enter Title" name="title" required>
 
 
 				<label for="tags"><b>Tags</b></label><br>
@@ -137,10 +138,55 @@ $num_directions = 3;
 
 				<?php
 				
+					// If you want to be in edit mode...
+					if ($_GET['message'] == 'edit')
+					{
+
+						$recipe_id = $_GET['recipe_id'];
+						
+						
+						// Grab recipe author.
+						$stmt = $db->prepare('SELECT * FROM `test`.`recipes` WHERE `id` = ?;');
+						$stmt->bind_param("i", $recipe_id);
+						$stmt->execute();
+						$result = $stmt->get_result();
+						$row = $result->fetch_assoc();
+
+
+						// Are you editing your own recipe?  This only needs to be done once.
+						// https://stackoverflow.com/questions/5683767/how-to-change-text-in-textbox  answer by Akash Agarwal
+						if ($row['user_id'] == $_SESSION['user_id'])
+						{
+							$original_author = $row['original_author'];
+							$serves = $row['serves'];
+							$prep_time = $row['prep_time'];
+							$isEditable = true;
+							echo '<input class="hiddenInput" name="editId" value="'.$recipe_id.'">';
+							echo '<script>
+								document.getElementById("recipeTitle").value="'.$row['title'].'";
+							
+							
+							
+							
+							</script>';
+							
+							
+							
+						}
+						else
+						{
+							echo '<input class="hiddenInput" name="isEditable" value="0">';
+						}
+						
+						
+						
+					}
+					
+				
+					// Populate the list of tags.
 					$stmt = $db->prepare("SELECT * FROM `tags`");
 					//$stmt->bind_param("s", $username); // "s" means the variable is a string  (No need to bind parameters, there are no variables in the query)
 					$stmt->execute();
-
 					// Get the result
 					$result = $stmt->get_result();
 					
@@ -154,6 +200,11 @@ $num_directions = 3;
 					}
 					
 					sort($tags);
+				
+				
+				
+
+					
 
 				?>
 
@@ -182,21 +233,51 @@ $num_directions = 3;
 				</script>
 				
 				<?php
-
-
+					
+					
 					echo '<div id="starttags"></div>';
-							
-					for ($a = 0; $a < $num_tags; $a++)
+				
+					if ($isEditable)
 					{
-						echo '<div class="tag" id="tag_'.$a.'"><select name="tag'.$a.'">';
-						
-						for ($b = 0; $b < sizeof($tags); $b++)
+						$stmt = $db->prepare("SELECT * FROM `tag_list` WHERE `recipe_id` = ?");
+						$stmt->bind_param("i", $recipe_id);
+						$stmt->execute();
+						$result = $stmt->get_result();
+						$c = 0;
+						while ($row = $result->fetch_assoc())
 						{
-							echo '<option value="'.$tags[$b].'">'.$tags[$b].'</option>';
+							echo '<div class="tag" id="tag_'.$c.'"><select id="s_tag_'.$c.'" name="tag'.$c.'">';
+							
+							for ($b = 0; $b < sizeof($tags); $b++)
+							{
+								echo '<option value="'.$tags[$b].'">'.$tags[$b].'</option>';
+							}
+							
+							echo '</select><br></div>';
+							echo '<script>document.getElementById("s_tag_'.$c.'").value = "'.$tags[$row['tag_id']].'";</script>';
+							$c++;
 						}
 						
-						echo '</select><br></div>';
 					}
+					else
+					{
+						for ($a = 0; $a < $num_tags; $a++)
+						{
+							echo '<div class="tag" id="tag_'.$a.'"><select name="tag'.$a.'">';
+							
+							for ($b = 0; $b < sizeof($tags); $b++)
+							{
+								echo '<option value="'.$tags[$b].'">'.$tags[$b].'</option>';
+							}
+							
+							echo '</select><br></div>';
+						}
+					}
+
+
+					
+							
+					
 				
 					echo '<br><div class="alter_buttons"><a class="alter_button" onclick="clickAddTag()">Add Tag</a>  <a class="alter_button" onclick="clickRemoveTag()">Delete Tag</a></div><br><br>';
 				
@@ -205,19 +286,23 @@ $num_directions = 3;
 
 
 				<label for="original_author"><b>Original Author</b></label>
-				<input type="text" class="redo" name="original_author">
+				<input id="original_author" type="text" class="redo" name="original_author">
 				
 
 				<label for="prep_time"><b>Prep Time</b></label>
-				<select name="prep_time">
+				<select id="prep_time" name="prep_time">
 					
 					<?php
+					
+					
+					
 					
 					for ($a = 5; $a <= 120; $a += 5)
 					{
 						echo '<option value="'.$a.'_mins">'.$a.'</option>';
 					}
 					
+
 					?>
 					
 				
@@ -225,7 +310,7 @@ $num_directions = 3;
 				
 				<label for="serves"><b>Serves</b></label>
 				
-				<select name="serves">
+				<select  id="serves" name="serves">
 
 					<?php
 					
@@ -234,6 +319,20 @@ $num_directions = 3;
 						echo '<option value="'.$a.'_people">'.$a.'</option>';
 					}
 					
+
+					if ($isEditable)
+					{
+						echo '<script>
+								document.getElementById("original_author").value = "'.$original_author.'";
+								document.getElementById("prep_time").value = "'.$prep_time.'_mins";
+								document.getElementById("serves").value = "'.$serves.'_people";
+								
+							  </script>';
+			
+					}
+
+
+
 					?>
 				
 				</select><label for="people"> people</label><br><br>
@@ -262,15 +361,50 @@ $num_directions = 3;
 				<?php
 				echo '<div id="start_ingredients"></div>';
 				
-				for ($a = 0; $a < $num_ingredients; $a++)
+				
+				if ($isEditable)
 				{
-					echo '<div class="ingredient_group" id="ingredient_'.$a.'">';
-					echo '<input type="text" class="ingredient_quantity" name="ingredient_'.$a.'_quantity">';
-					echo '<input type="text" class="ingredient_unit" name="ingredient_'.$a.'_unit">';
-					echo '<input type="text" class="ingredient_name" name="ingredient_'.$a.'_name">';
-					echo '</div>';
+					$stmt = $db->prepare("SELECT * FROM `ingredients` WHERE `recipe_id` = ?");
+					$stmt->bind_param("i", $recipe_id);
+					$stmt->execute();
+					$result = $stmt->get_result();
+					$c = 0;
+					while ($row = $result->fetch_assoc())
+					{
+						
+						echo '<div class="ingredient_group" id="ingredient_'.$c.'">';
+						echo '<input type="text" class="ingredient_quantity" id="i_ingredient_'.$c.'_quantity" name="ingredient_'.$c.'_quantity">';
+						echo '<input type="text" class="ingredient_unit"  id="i_ingredient_'.$c.'_unit" name="ingredient_'.$c.'_unit">';
+						echo '<input type="text" class="ingredient_name"  id="i_ingredient_'.$c.'_name" name="ingredient_'.$c.'_name">';
+						echo '</div>';
+					
+						echo '<script>
+								document.getElementById("i_ingredient_'.$c.'_quantity").value = "'.$row['quantity'].'";
+								document.getElementById("i_ingredient_'.$c.'_unit").value = "'.$row['type'].'";
+								document.getElementById("i_ingredient_'.$c.'_name").value = "'.$row['name'].'";
+								
+							  </script>';
+						$c++;
+					}
 					
 				}
+				else
+				{
+					for ($a = 0; $a < $num_ingredients; $a++)
+					{
+						echo '<div class="ingredient_group" id="ingredient_'.$a.'">';
+						echo '<input type="text" class="ingredient_quantity" id="i_ingredient_'.$a.'_quantity" name="ingredient_'.$a.'_quantity">';
+						echo '<input type="text" class="ingredient_unit" id="i_ingredient_'.$a.'_unit" name="ingredient_'.$a.'_unit">';
+						echo '<input type="text" class="ingredient_name" id="i_ingredient_'.$a.'_name" name="ingredient_'.$a.'_name">';
+						echo '</div>';
+						
+					}
+
+				}
+				
+				
+				
+				
 				
 				
 				?>
@@ -298,13 +432,43 @@ $num_directions = 3;
 				
 				echo '<div id="start_directions"></div>';
 				
-				for ($a = 0; $a < $num_directions; $a++)
+				if ($isEditable)
 				{
-					echo '<div class="direction" id="direction_'.$a.'">';
-					echo strval($a+1).'. <input class="redo" type="text" name="direction_'.$a.'">';
-					echo '<br></div>';
+					$stmt = $db->prepare("SELECT * FROM `directions` WHERE `recipe_id` = ?");
+					$stmt->bind_param("i", $recipe_id);
+					$stmt->execute();
+					$result = $stmt->get_result();
+					$c = 0;
+					while ($row = $result->fetch_assoc())
+					{
+						
+						echo '<div class="direction" id="direction_'.$c.'">';
+						echo strval($c+1).'. <input class="redo" type="text" id="i_direction_'.$c.'" name="direction_'.$c.'">';
+						echo '<br></div>';
+					
+						echo '<script>
+								document.getElementById("i_direction_'.$c.'").value = "'.$row['direction'].'";
+							  </script>';
+						$c++;
+					}
 					
 				}
+				else
+				{
+					for ($a = 0; $a < $num_directions; $a++)
+					{
+						echo '<div class="direction" id="direction_'.$a.'">';
+						echo strval($a+1).'. <input class="redo" type="text" id="i_direction_'.$c.'" name="direction_'.$a.'">';
+						echo '<br></div>';
+						
+					}
+
+				}
+				
+				
+				
+				
+				
 				?>
 				<br>
 				<div class="alter_buttons">

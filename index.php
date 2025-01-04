@@ -59,6 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 			{
 				echo '<script>alert("Complaint noted!");</script>';
 			}
+			if ($_GET['message'] == 'e')
+			{
+				echo '<script>alert("Recipe edited!");</script>';
+			}
 
 
 			echo '<div id="all_else">';
@@ -81,7 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 				//Start of individual recipe.
 				echo '<div class="ind_recipe">
 							<div class="recipe_title">
-									<div class="recipe_title_label">'.$recipe_row['title'].'<span onclick="expandRecipe('.$recipe_row['id'].')" class="expand" title="Expand Recipe">&blacktriangledown;</span></div>
+									<div class="recipe_title_label">'.$recipe_row['title'];
+									
+									if (isset($_SESSION['username']) and ($recipe_row['user_id'] == $_SESSION['user_id']))
+									{
+										echo '<span class="edit_button">Edit</span>';
+									}
+									
+									
+									echo '<span onclick="expandRecipe('.$recipe_row['id'].')" class="expand" title="Expand Recipe">&blacktriangledown;</span></div>
 									
 
 									';
@@ -248,13 +260,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 			// If you liked a recipe, give the like button a green background.  Otherise, don't.
 			if (isset($_SESSION['username']))
 			{
+				// text-indent idea from https://stackoverflow.com/users/1355315/abhitalks
 				if (!empty($your_likes_row))
 				{
-					echo '<div id="lb_'.$recipe_row['id'].'"><span class="like_button" id="like_'.$recipe_row['id'].'" style="background-color: green" onclick="submitLike('.$recipe_row['id'].')">&#128079</span></div>'.$num_likes.'  ';
+					echo '<div id="lb_'.$recipe_row['id'].'"><span class="like_button" id="like_'.$recipe_row['id'].'" style="background-color: green" onclick="submitLike('.$recipe_row['id'].')">&#128079 '.$num_likes.'</span></div>';
 				}
 				else
 				{
-					echo '<div id="lb_'.$recipe_row['id'].'"><span class="like_button" id="like_'.$recipe_row['id'].'" style="background-color: none" onclick="submitLike('.$recipe_row['id'].')">&#128079</span></div>'.$num_likes.'  ';
+					echo '<div id="lb_'.$recipe_row['id'].'"><span class="like_button" id="like_'.$recipe_row['id'].'" style="background-color: none" onclick="submitLike('.$recipe_row['id'].')">&#128079 '.$num_likes.'</span></div>';
 				}
 			
 			}

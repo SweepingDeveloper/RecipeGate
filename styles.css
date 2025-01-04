@@ -209,6 +209,13 @@ footer {
 	box-shadow: 10px 10px 5px black;
 }
 
+.reportForm {
+	background-color: #FFD4D4;
+	margin: auto;
+	border: 2px solid #400000;
+	width: 80%;
+	box-shadow: 10px 10px 5px black;
+}
 
 
 .close {
@@ -394,23 +401,42 @@ footer {
 .last_modified {
 	font-size: 12px;
 }
+
 .options_bar {
 	display: flex;
+	flex-wrap: nowrap;
 	justify-content: space-between;
+	background-color: white;
 }
-
+.like_flag {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+}
 
 .like_button {
 	font-size: 24px;
+	margin-right: 5px;
 	cursor: pointer;
+}
+
+.like_button:hover {
+	background-color: #C0FFC0;
 }
 
 
 
 .flag_button {
 	font-size: 24px;
+	margin-left: 10px;
+	text-decoration: none;
 	color: red;
 	cursor: pointer;
+	
+}
+
+.flag_button:hover {
+	background-color: #400000;
 }
 
 
@@ -466,6 +492,17 @@ footer {
 	box-shadow: 2px 2px; 
 }
 
+.edit_button {
+	display: flex;
+	justify-content: flex-start;
+	text-align: center;
+	padding: 2px;
+	width: 40%;
+	border-style: solid;
+	border-width: 1px;
+	background-color: #C0C0C0;
+	box-shadow: 2px 2px; 	
+}
 
 .new_recipe_placeholder{
 	display: flex;

@@ -12,7 +12,7 @@ require "mysql_login.php";
 	if (isset($_SESSION['username']) and ($_SESSION['admin_status'] == 1))
 	{
 		
-		echo '<div class="defForm">
+		echo '<div class="reportForm">
 	
 		<div class="container">
 		

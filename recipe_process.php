@@ -65,6 +65,16 @@ foreach ($fields as $x)
 	}
 }
 
+$editId = $_POST['editId'];
+
+if ($editId > 0)
+{
+	$isanEdit = true;
+}
+else
+{
+	$isanEdit = false;
+}
 
 $recipe_title = $_POST['title'];
 $prep_time = $_POST['prep_time'];
@@ -84,49 +94,96 @@ while ($row = $result->fetch_assoc())
 }
 
 
-//Insert initial values in the database.
-$stmt = $db->prepare('INSERT INTO `test`.`recipes` (`title`, `user_id`, `serves`, `prep_time`, `original_author`, `timestamp`) VALUES (?, ?, ?, ?, ?, ?);');
-$stmt->bind_param("siiiss", $recipe_title, $user_id, $serves, $prep_time, $original_author, $now_format);
-$stmt->execute();
-$result = $stmt->get_result();
-
-//Grab new recipe id.
-$stmt = $db->prepare('SELECT `id` FROM `test`.`recipes` WHERE `title` = ? AND `user_id` = ? AND `serves` = ? AND `prep_time` = ? AND `original_author` = ? LIMIT 1;');
-$stmt->bind_param("siiis", $recipe_title, $user_id, $serves, $prep_time, $original_author);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-
-$recipe_id = $row['id'];
-
-//Insert tags in the database.
-foreach ($tag as $t)
-{
-	$stmt = $db->prepare('INSERT INTO `test`.`tag_list` (`recipe_id`, `tag_id`) VALUES (?, ?);');
-	$stmt->bind_param("ii", $recipe_id, $tag_numbers[$t]);
-	$stmt->execute();
+// Insert (or Update) initial values in the database.
+if ($isanEdit)
+{	
+	$stmt = $db->prepare('UPDATE `test`.`recipes` SET `title` = ?, `user_id` = ?, `original_author` = ?, `serves` = ?, `prep_time` = ?, `timestamp` = ?) WHERE (`id` = ?);');	
+	$stmt->bind_param("sisiisi", $recipe_title, $user_id, $original_author, $serves, $prep_time, $now_format, $editId);
 }
-
-//Insert ingredients in the database.
-for ($a = 0; $a < sizeof($ingredient_name); $a++)
+else
 {
-	$stmt = $db->prepare('INSERT INTO `test`.`ingredients` (`recipe_id`, `quantity`, `type`, `name`) VALUES (?, ?, ?, ?);');
-	$stmt->bind_param("iiss", $recipe_id,$ingredient_quantity[$a], $ingredient_unit[$a], $ingredient_name[$a]);
+	$stmt = $db->prepare('INSERT INTO `test`.`recipes` (`title`, `user_id`, `serves`, `prep_time`, `original_author`, `timestamp`) VALUES (?, ?, ?, ?, ?, ?);');
+	$stmt->bind_param("siiiss", $recipe_title, $user_id, $serves, $prep_time, $original_author, $now_format);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+
+
+
+
+//  If it's an edit, delete the old data.
+
+if ($isanEdit)
+{
+	// Delete old tags.
+	$stmt = $db->prepare('DELETE FROM `test`.`tag_list` WHERE (`recipe_id` = ?)');
+	$stmt->bind_param("i", $editId);
 	$stmt->execute();
 	
-}
-
-//Insert directions in the database.
-for ($a = 0; $a < sizeof($direction); $a++)
-{
-	$direction_num = ($a + 1);
-	$stmt = $db->prepare('INSERT INTO `test`.`directions` (`recipe_id`, `direction_num`, `direction`) VALUES (?,?,?);');
-	$stmt->bind_param("iis", $recipe_id, $direction_num, $direction[$a]);
+	// Delete old ingredients.
+	$stmt = $db->prepare('DELETE FROM `test`.`ingredients` WHERE (`recipe_id` = ?)');
+	$stmt->bind_param("i", $editId);
 	$stmt->execute();
+
+	// Delete old directions.
+	$stmt = $db->prepare('DELETE FROM `test`.`directions` WHERE (`recipe_id` = ?)');
+	$stmt->bind_param("i", $editId);
+	$stmt->execute();
+
+	// Give the recipe Id the edit id for the rest.
+	$recipe_id = $editId;
+	
+}
+else
+{
+	//Grab new recipe id.
+	$stmt = $db->prepare('SELECT `id` FROM `test`.`recipes` WHERE `title` = ? AND `user_id` = ? AND `serves` = ? AND `prep_time` = ? AND `original_author` = ? LIMIT 1;');
+	$stmt->bind_param("siiis", $recipe_title, $user_id, $serves, $prep_time, $original_author);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+
+	$recipe_id = $row['id'];
 }
 
+	//Insert tags in the database.
+	foreach ($tag as $t)
+	{
+		$stmt = $db->prepare('INSERT INTO `test`.`tag_list` (`recipe_id`, `tag_id`) VALUES (?, ?);');
+		$stmt->bind_param("ii", $recipe_id, $tag_numbers[$t]);
+		$stmt->execute();
+	}
 
-header('Location: index.php?message=r');
+	//Insert ingredients in the database.
+	for ($a = 0; $a < sizeof($ingredient_name); $a++)
+	{
+		$stmt = $db->prepare('INSERT INTO `test`.`ingredients` (`recipe_id`, `quantity`, `type`, `name`) VALUES (?, ?, ?, ?);');
+		$stmt->bind_param("iiss", $recipe_id,$ingredient_quantity[$a], $ingredient_unit[$a], $ingredient_name[$a]);
+		$stmt->execute();
+		
+	}
+
+	//Insert directions in the database.
+	for ($a = 0; $a < sizeof($direction); $a++)
+	{
+		$direction_num = ($a + 1);
+		$stmt = $db->prepare('INSERT INTO `test`.`directions` (`recipe_id`, `direction_num`, `direction`) VALUES (?,?,?);');
+		$stmt->bind_param("iis", $recipe_id, $direction_num, $direction[$a]);
+		$stmt->execute();
+	}
+
+	
+
+
+if ($isanEdit)
+{
+	header('Location: index.php?message=e');	
+}
+else
+{
+	header('Location: index.php?message=r');
+}
+
 
 
 

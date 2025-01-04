@@ -184,3 +184,11 @@ Developer Notes:
 			 What do I search for?  Tags?  Authors?  Recipes?  I need to do some more research before I continue.
 			 
 			 Oh, I also hid the follow button to those who are not logged in.
+			 
+1/4/2025  :  Need to remember to make a way to edit the recipe.
+			 Started at 2:25PM.  Paused at 2:50PM.  25 minutes.
+			 Resumed at 3:05PM.  Paused at 3:42PM.  Needed to get comfy.  37 minutes.
+			 Resumed at 3:44PM.  Stopped at 4:28PM.  Next time, continue to work on the edit feature. 44 minutes.
+			 Total time: 106 minutes.
+			 
+			 
