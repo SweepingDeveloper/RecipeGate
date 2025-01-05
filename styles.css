@@ -58,8 +58,9 @@ main {
 }
 
 .ind_recipe {
-	width: 80%;
+	width: 90%;
 	margin: auto;
+
 }
 
 .recipe_title {
@@ -117,6 +118,7 @@ main {
 	padding-top: 3px;
 	padding-left: 5px;
 	padding-right: 5px;
+
 }
 
 
@@ -493,15 +495,21 @@ footer {
 }
 
 .edit_button {
-	display: flex;
-	justify-content: flex-start;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	text-decoration: none;
+	
 	text-align: center;
-	padding: 2px;
-	width: 40%;
+	padding: 5px;
+	width: auto;
 	border-style: solid;
 	border-width: 1px;
 	background-color: #C0C0C0;
 	box-shadow: 2px 2px; 	
+}
+
+.edit_button:hover{
+	background-color: #F0F0F0;
 }
 
 .new_recipe_placeholder{
@@ -520,6 +528,11 @@ footer {
 	background-color: #C0C0C0;
 	box-shadow: 2px 2px; 
 	
+}
+
+
+.new_recipe_button:hover {
+	background-color: #F0F0F0;
 }
 
 .plus_button {

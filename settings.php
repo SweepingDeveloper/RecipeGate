@@ -95,6 +95,8 @@
 	<form class="defForm" action="#" method="post">
 		<div class="container">
 		<div class="pageTitle"><?php echo $encrypted_given_name; ?> Account Settings</div>
+		<span onclick="window.location.href='index.php';" class="close" title="Return To Home Page">&times;</span>
+
 			<br>
 
 			<div class="defContainer">

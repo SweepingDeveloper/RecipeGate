@@ -119,8 +119,9 @@ $isEditable = false;
 		
 			<div class="container">
 				
-				<div class="signupTitle">Insert Recipe</div>
-			
+				<div class="signupTitle">Edit Recipe</div>
+				<span onclick="window.location.href='index.php';" class="close" title="Return To Home Page">&times;</span>
+
 			</div>
 			
 			
@@ -244,8 +245,13 @@ $isEditable = false;
 						$stmt->execute();
 						$result = $stmt->get_result();
 						$c = 0;
+						
+
+						
 						while ($row = $result->fetch_assoc())
 						{
+							$tag_index = array_search($row['tag_id'], $tag_ids);
+							
 							echo '<div class="tag" id="tag_'.$c.'"><select id="s_tag_'.$c.'" name="tag'.$c.'">';
 							
 							for ($b = 0; $b < sizeof($tags); $b++)
@@ -254,7 +260,7 @@ $isEditable = false;
 							}
 							
 							echo '</select><br></div>';
-							echo '<script>document.getElementById("s_tag_'.$c.'").value = "'.$tags[$row['tag_id']].'";</script>';
+							echo '<script>document.getElementById("s_tag_'.$c.'").value = "'.$tag_index.'";</script>';
 							$c++;
 						}
 						

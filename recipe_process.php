@@ -97,7 +97,7 @@ while ($row = $result->fetch_assoc())
 // Insert (or Update) initial values in the database.
 if ($isanEdit)
 {	
-	$stmt = $db->prepare('UPDATE `test`.`recipes` SET `title` = ?, `user_id` = ?, `original_author` = ?, `serves` = ?, `prep_time` = ?, `timestamp` = ?) WHERE (`id` = ?);');	
+	$stmt = $db->prepare('UPDATE `test`.`recipes` SET `title` = ?, `user_id` = ?, `original_author` = ?, `serves` = ?, `prep_time` = ?, `timestamp` = ? WHERE (`id` = ?);');	
 	$stmt->bind_param("sisiisi", $recipe_title, $user_id, $original_author, $serves, $prep_time, $now_format, $editId);
 }
 else

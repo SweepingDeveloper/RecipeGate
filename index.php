@@ -87,10 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 							<div class="recipe_title">
 									<div class="recipe_title_label">'.$recipe_row['title'];
 									
-									if (isset($_SESSION['username']) and ($recipe_row['user_id'] == $_SESSION['user_id']))
-									{
-										echo '<span class="edit_button">Edit</span>';
-									}
+									
 									
 									
 									echo '<span onclick="expandRecipe('.$recipe_row['id'].')" class="expand" title="Expand Recipe">&blacktriangledown;</span></div>
@@ -133,7 +130,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 
 				}
 				
-				echo '</div></div>';
+				echo '</div>
+				
+				<div class="edit_bar">';
+				
+				if (isset($_SESSION['username']) and ($recipe_row['user_id'] == $_SESSION['user_id']))
+				{
+					echo '<a class="edit_button"  href="new_recipe.php?message=edit&recipe_id='.$recipe_row['id'].'">Edit</a>';
+				}
+				
+				echo '</div>';
+				
+				
+				echo '</div>';
 				
 				
 				//echo '<div id="rest_of_recipe_'.$recipe_row['id'].'>';
@@ -288,7 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 			
 				echo '<a class="flag_button" id="flag_'.$recipe_row['id'].'" href="report.php?complainer_id='.$complainer_id.'&recipe_id='.$recipe_row['id'].'">&#9873</a></div></div>
 				<div class="endofrecipe"></div>
-				</div></div><br><br>';
+				</div></div>';
 				
 
 			}
