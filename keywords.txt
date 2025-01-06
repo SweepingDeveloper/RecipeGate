@@ -1,0 +1,166 @@
+Recipe keywords:
+
+
+Common Food Categories
+Fruits
+
+Apple
+Banana
+Orange
+Mango
+Pineapple
+Strawberry
+Blueberry
+Watermelon
+Lemon
+Grapes
+Vegetables
+
+Carrot
+Broccoli
+Spinach
+Potato
+Onion
+Garlic
+Tomato
+Bell Pepper
+Cucumber
+Kale
+Proteins
+
+Chicken
+Beef
+Pork
+Salmon
+Shrimp
+Tuna
+Egg
+Tofu
+Lentils
+Chickpeas
+Dairy
+
+Milk
+Cheese
+Butter
+Yogurt
+Cream
+Cottage Cheese
+Sour Cream
+Ice Cream
+Grains and Legumes
+
+Rice
+Pasta
+Bread
+Quinoa
+Oats
+Beans
+Barley
+Corn
+Polenta
+Couscous
+Herbs and Spices
+
+Basil
+Thyme
+Rosemary
+Oregano
+Parsley
+Cilantro
+Cumin
+Paprika
+Cinnamon
+Black Pepper
+Baking Ingredients
+
+Flour
+Sugar
+Baking Soda
+Baking Powder
+Yeast
+Vanilla Extract
+Cocoa Powder
+Cornstarch
+Beverages
+
+Coffee
+Tea
+Juice
+Smoothie
+Soda
+Wine
+Beer
+Snacks and Sweets
+
+Chocolate
+Cookies
+Cake
+Muffins
+Popcorn
+Chips
+Nuts
+Candy
+Sauces and Condiments
+
+Ketchup
+Mayonnaise
+Mustard
+Soy Sauce
+Hot Sauce
+Barbecue Sauce
+Ranch Dressing
+Honey
+Seafood
+
+Crab
+Lobster
+Cod
+Tilapia
+Scallops
+Mussels
+Oysters
+International Cuisine Basics
+
+Tortilla
+Pita
+Curry
+Sushi
+Soba
+Hummus
+Salsa
+Kimchi
+Ramen
+Gnocchi
+Dietary Categories
+Vegan
+Vegetarian
+Gluten-Free
+Keto
+Paleo
+Low-Carb
+High-Protein
+Dairy-Free
+Nut-Free
+Low-Sodium
+Cooking Methods
+Grilled
+Baked
+Fried
+Roasted
+Steamed
+Boiled
+Sautéed
+Braised
+Poached
+Popular Dishes
+Pizza
+Burger
+Pasta Salad
+Pancakes
+Tacos
+Sushi Roll
+Fried Rice
+Smoothie Bowl
+Soup
+Roast Chicken

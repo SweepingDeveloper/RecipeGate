@@ -4,12 +4,76 @@
     box-sizing: border-box;
 }
 
+.lato-thin {
+  font-family: "Lato", serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.lato-light {
+  font-family: "Lato", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.lato-regular {
+  font-family: "Lato", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lato-bold {
+  font-family: "Lato", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lato-black {
+  font-family: "Lato", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-thin-italic {
+  font-family: "Lato", serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.lato-light-italic {
+  font-family: "Lato", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.lato-regular-italic {
+  font-family: "Lato", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.lato-bold-italic {
+  font-family: "Lato", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.lato-black-italic {
+  font-family: "Lato", serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+
+
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Lato", sans-serif;
+	background-color: #fdf2e9;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #d35400;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -24,6 +88,7 @@ header {
 nav ul {
     list-style: none;
     display: flex;
+
 }
 
 nav ul li {
@@ -37,7 +102,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-	background-color: green;
+	background-color: #d35400;
 }
 
 .menu-toggle {
@@ -60,13 +125,15 @@ main {
 .ind_recipe {
 	width: 90%;
 	margin: auto;
+	box-shadow: 0 3px 3px 0 black;
+
 
 }
 
 .recipe_title {
 	text-align: left;
-	background-color: #F5E1A9;
-	
+
+	background-image: linear-gradient(0deg, #FAE5D3, #FDF2E9);
 
 }
 
@@ -106,14 +173,14 @@ main {
 }
 
 .ind_tag {
-	background-color: #E7D282;
+	background-color: #f5cba7;
 	padding: 5px 5px 5px 5px;
 	border-radius: 5px;
 
 }
 
 .ingredients_directions {
-	background-color: #F5E1A9;
+	background-color: #FAE5D3;
 	padding-bottom: 5px;
 	padding-top: 3px;
 	padding-left: 5px;
@@ -157,7 +224,7 @@ footer {
 .loginModal, .defModal {
 	display: none;
 	position: fixed;
-	z-index: 1;
+	z-index: 4;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -172,7 +239,7 @@ footer {
 .recipeModalClass {
 	display: none;
 	position: static;
-	z-index: 1;
+	z-index: 4;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -187,9 +254,9 @@ footer {
 .signupModal {
 	display: none;
 	position: fixed;
-	z-index: 2;
+	z-index: 5;
 	left: 0;
-	top: 0;
+	top: -100px;
 	width: 100%;
 	height: 100%;
 	background-color: rgb(0,0,0);
@@ -210,6 +277,8 @@ footer {
 	width: 50%;
 	box-shadow: 10px 10px 5px black;
 }
+
+
 
 .reportForm {
 	background-color: #FFD4D4;
@@ -408,7 +477,7 @@ footer {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;
-	background-color: white;
+
 }
 .like_flag {
 	display: flex;
@@ -474,6 +543,11 @@ footer {
 	display: none;
 }
 
+
+#all_else{
+	margin-top: 80px;
+	
+}
 .alter_buttons
 {
 	display: flex;
@@ -574,8 +648,80 @@ footer {
 	align-items: center;
 }
 
+.search_bar {
+	margin: auto;
 
+}
 
+.search_bar .search_input {
+	position: absolute;
+	left: 25%;
+	background: #FFF;
+	margin: auto;
+	width: 50%;
+	border-radius: 5px;
+	box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+
+}
+
+.search_input input {
+	height: 55px;
+	width: 100%;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	padding: 0 60px 0 20px;
+	font-size: 18px;
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+
+}
+
+.search_input .icon {
+	height: 55px;
+	width: 55px;
+	line-height: 55px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: center;
+	font-size: 20px;
+	color: black;
+	cursor:pointer;
+	
+}
+
+.search_input .autocomplete_box {
+	padding: 0px;
+	max-height: 280px;
+	overflow-y: auto;
+	opacity: 0;
+	pointer-events: none;
+
+}
+
+.search_input.active .autocomplete_box {
+
+	padding: 10px 8px;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.search_input.active .autocomplete_box li {
+	display: block;
+}
+
+.autocomplete_box li {
+	list-style: none;
+	padding: 8px 12px;
+	width: 100%;
+	cursor: default;
+	border-radius: 3px;
+	display: none;
+}
+
+.autocomplete_box li:hover {
+	background-color: #efefef;
+}
 
 @media (max-width: 768px) {
     nav ul {
@@ -585,13 +731,13 @@ footer {
         top: 48px;
         right: 0;
 		z-index: 0;
-        background-color: #4CAF50;
+        background-color: #d35400;
         width: 100%;
     }
 
     nav ul.active {
         display: flex;
-		z-index: 1;
+		z-index: 3;
     }
 
     .menu-toggle {
@@ -614,6 +760,12 @@ footer {
 
 	.defModal {
 		width: 100%;
+		top: -60px;
+		background-color: rgba(0,0,0,0);
+	}
+	
+	.signupMessage {
+		display: none;
 	}
 	
 	.defForm {
@@ -678,6 +830,13 @@ footer {
 		text-align: justify;
 		transform: translateX(-50%);
 		box-shadow: 2px 2px black; 
+	}
+	
+	
+	.search_bar .search_input {
+		left: 0%;
+		width: 100%;
+		z-index: 2;
 	}
 }
 }

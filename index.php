@@ -65,11 +65,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 			}
 
 
-			echo '<div id="all_else">';
-
-			echo '<div class="search_bar"></div>';
+			
 
 
+			// Learning from https://www.youtube.com/watch?v=QxMBHi_ZiT8
+			echo '<div class="search_bar">
+			
+				<div class="search_input">
+					<input type="text" placeholder="Type to search...">
+					<div class="autocomplete_box">
+						<li>Populate Tag Suggetions Here.</li>
+						<li>Populate Tag Suggetions Here.</li>
+						<li>Populate Tag  Here.</li>
+						<li>Populate Tag Suggetions Here.</li>
+					</div>
+					<div class="icon">&#x1F50E</div>
+			
+				</div>
+			
+			</div>';
+
+
+			echo '<script>';
+			echo 'let suggestions = [];';
+			
+			$stmt = $db->prepare('SELECT * FROM `keywords`;');
+			$stmt->execute();
+			$result = $stmt->get_result();
+
+
+			while ($row = $result->fetch_assoc())
+			{
+				echo 'suggestions.push("'.$row['keyword'].'");';
+			}
+			
+			
+			echo '</script>
+			
+			<script src="suggestion_script.js"></script>';
+
+		echo '<div id="all_else">';
 			if (isset($_SESSION['username']))
 			{
 				echo '<p align="center"><div id="plus_button_id" class="plus_button" onclick="document.getElementById(\'recipeModal\').style.display=\'block\'; document.getElementById(\'plus_button_id\').style.display=\'none\'; document.getElementById(\'all_else\').style.display=\'none\'">+</div></p>';

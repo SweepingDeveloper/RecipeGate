@@ -4,3 +4,5 @@ const navUl = document.querySelector('nav ul');
 mobileMenu.addEventListener('click', () => {
     navUl.classList.toggle('active');
 });
+
+
