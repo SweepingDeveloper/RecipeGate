@@ -41,12 +41,32 @@ inputBox.onkeyup = (e) => {
 	
 }
 
+
+
 function select(element)
 {
 	let selectUserData = element.textContent;
 	inputBox.value = selectUserData; // Passing the user selected list item data in text field
 	searchWrapper.classList.remove("active"); // Hide autocomplete box.
 }
+
+document.getElementById("searchButton").addEventListener("click", processSearch(inputBox.value));
+
+
+function processSearch(query)
+{
+	console.log("Processing search...");
+	$.ajax({
+		url: "generate_recipes.php?generation_mode=1&query="+query,
+		success: function(result) {
+			$("#all_else").html(result);
+			}
+	});
+}
+
+
+
+
 
 function showSuggestions(list)
 {

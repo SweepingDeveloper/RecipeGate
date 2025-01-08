@@ -58,10 +58,20 @@ foreach ($fields as $x)
 	else if (substr($x, -4) == "name")
 	{
 		array_push($ingredient_name, $_POST[$x]);
+		if ($_POST[$x] == "")		// If the name is blank
+		{
+			$d = array_pop($ingredient_name);
+			$d = array_pop($ingredient_unit);
+			$d = array_pop($ingredient_quantity);
+		}
 	}
 	else if (substr($x,0,9) == "direction")
 	{
 		array_push($direction, $_POST[$x]);
+		if ($_POST[$x] == "")	    // If the name is blank
+		{
+			$d = array_pop($direction);
+		}
 	}
 }
 
