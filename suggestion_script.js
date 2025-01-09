@@ -3,6 +3,7 @@
 const searchWrapper = document.querySelector(".search_input");
 const inputBox = searchWrapper.querySelector("input");
 const suggBox = document.querySelector(".autocomplete_box");
+const everywhereElse = document.querySelector("main");
 
 // If user presses and key and releases it
 inputBox.onkeyup = (e) => {
@@ -39,7 +40,20 @@ inputBox.onkeyup = (e) => {
 		searchWrapper.classList.remove("active"); // Hide autocomplete box.
 	}
 	
+	// https://stackoverflow.com/questions/7060750/detect-the-enter-key-in-a-text-input-field
+	if (e.key === 'Enter' || e.keyCode === 13)
+	{
+		processSearch(inputBox.value);
+	}
+	
 }
+
+inputBox.onclick = function()
+{
+	inputBox.select();
+}
+
+
 
 
 
@@ -59,8 +73,16 @@ function processSearch(query)
 	$.ajax({
 		url: "generate_recipes.php?generation_mode=1&query="+query,
 		success: function(result) {
-			$("#all_else").html(result);
+			if (result == "No recipes found.")
+			{
+				searchWrapper.classList.remove("active"); // Hide autocomplete box.
 			}
+			else
+			{
+				$("#all_else").html(result);
+				searchWrapper.classList.remove("active"); // Hide autocomplete box.
+			}
+		}
 	});
 }
 

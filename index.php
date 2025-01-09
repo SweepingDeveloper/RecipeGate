@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 						<li>Populate Tag  Here.</li>
 						<li>Populate Tag Suggetions Here.</li>
 					</div>
-					<div class="icon" id="searchButton">&#x1F50E</div>
+					<div class="icon" id="searchButton"><span onclick="processSearch(inputBox.value);">&#x1F50E</span></div>
 			
 				</div>
 			
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 
 		// Put AJAX Code here.
 
-			echo '<div id="all_else">
+			echo '<div id="all_else" class="all_else">
 			
 					Generating Recipes...
 			
@@ -119,6 +119,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' and $_POST['formType'] == 'login')
 			';
 
 			echo '<script>
+			
+			
+			
+				document.getElementById("all_else").onclick = function()
+				{
+					searchWrapper.classList.remove("active"); // Hide autocomplete box.
+					console.log("Closed Autocomplete Box.");
+				}
+
 				$.ajax({
 					url: "generate_recipes.php",
 					success: function(result) {

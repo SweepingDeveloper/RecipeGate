@@ -202,3 +202,7 @@ Developer Notes:
 			 Resumed at 5:40PM.  Stopped at 7:30PM.  Need to activate the search bar link, both by clicking the search button,
 			 and pressing enter on the search bar.  Still a work in progress. 110 minutes.
 			 
+1/9/2025:	 Started at 4:50PM.  Stopped at 5:52PM.   Got a starter search algorithm working.		 
+			 
+			 
+			 

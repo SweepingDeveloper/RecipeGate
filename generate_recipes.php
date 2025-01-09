@@ -18,15 +18,21 @@
 	if (empty($_GET['start_at'])) { $start_at = 0; } else { $start_at = $_GET['start_at']; }
 
 	if (empty($_GET['generation_mode'])) { $generation_mode = 0; } else { $generation_mode = $_GET['generation_mode']; }
+	
+	echo '<script>console.log("Generation Mode: '.$generation_mode.'");</script>';
 	// 0: Show all recipes.
 	// 1: Show recipes based on search.
 	// 2: Show recipes based on suggested recipe algorithm.
 	// 3: Show recipes from specific profile.
 	
 	if (empty($_GET['profile_id'])) { $profile_id = 0; } else { $profile_id = $_GET['profile_id']; }
+	
+	echo '<script>console.log("Profile ID: '.$profile_id.'");</script>';
+
 
 	if (empty($_GET['query'])) { $query = 'ALL'; } else { $query = $_GET['query']; }
 
+	echo '<script>console.log("Query: '.$query.'");</script>';
 
 	if ($start_at >= 20)
 	{
@@ -73,18 +79,21 @@
 				
 				while ($row = $res->fetch_assoc())
 				{
+					
 					array_push($recipe_id_matches, $row['id']);
 				}
 				
 				// Tag Search.
-				$stmt = $db->prepare("SELECT tag_list.recipe_id, tags.`id`, tags.`name` FROM tag_list INNER JOIN tags ON tag_list.tag_id = tags.id WHERE tags.name LIKE ?;");
+				$stmt = $db->prepare("SELECT `test`.tag_list.recipe_id, tags.`id`, tags.`name` FROM tag_list INNER JOIN tags ON tag_list.tag_id = tags.id WHERE tags.name LIKE ?;");
 				$stmt->bind_param("s", $formatted_query_text);
 				$stmt->execute();
 				$res = $stmt->get_result();
-				
+
+				//echo '<script>console.log("Tag error: '.mysqli_error($db).'");</script>';				
+
 				while ($row = $res->fetch_assoc())
 				{
-					array_push($recipe_id_matches, $row['id']);
+					array_push($recipe_id_matches, $row['recipe_id']);
 				}
 				
 				// Ingredient Search.
@@ -92,12 +101,15 @@
 				$stmt->bind_param("s", $formatted_query_text);
 				$stmt->execute();
 				$res = $stmt->get_result();
+
+				//echo '<script>console.log("Ingredient error: '.mysqli_error($db).'");</script>';				
 				
 				while ($row = $res->fetch_assoc())
 				{
-					array_push($recipe_id_matches, $row['id']);
+					array_push($recipe_id_matches, $row['recipe_id']);
 				}
 								
+				
 				
 				if (sizeof($recipe_id_matches) > 0)
 				{
@@ -107,14 +119,15 @@
 					{
 						for ($m = 1; $m < sizeof($recipe_id_matches); $m++)
 						{
-							$recipe_query .= ', ' . $recipe_id_matches[$m];
+							if ($recipe_id_matches[$m] > 0) { $recipe_query .= ', ' . $recipe_id_matches[$m]; }
 						}
 					}
 					$recipe_query .= ') ORDER BY `id` DESC LIMIT '.strval($start_at).', '.strval($start_at + 20).';';
 				}
 				else 
 				{
-					$recipe_query = 'SELECT * FROM '.$db_name.'.`recipes` WHERE `title` = "No recipes found.";';
+					echo "No recipes found.";
+					$recipe_query = 0;
 				}
 				echo '<script>console.log("'.$recipe_query.'")</script>';
 				
@@ -129,10 +142,11 @@
 		
 	}
 	
-	$recipe_result = mysqli_query($db, $recipe_query) or die ('Error querying recipes.');  
+	if ($recipe_query != 0) { $recipe_result = mysqli_query($db, $recipe_query) or die ('Error querying recipes.'); } 
+	 
 
 	// BEGIN RECIPE GENERATION LOOP.
-	while ($recipe_row = mysqli_fetch_array($recipe_result))
+	while ($recipe_row = mysqli_fetch_array($recipe_result) and $recipe_query != 0)
 	{
 		//Start of individual recipe.
 		echo '<div class="ind_recipe">
