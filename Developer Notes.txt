@@ -204,5 +204,4 @@ Developer Notes:
 			 
 1/9/2025:	 Started at 4:50PM.  Stopped at 5:52PM.   Got a starter search algorithm working.		 
 			 
-			 
-			 
+1/11/2025:   Started at around 6:00PM.  Stopped at 7:41PM.			 

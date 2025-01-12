@@ -31,6 +31,13 @@
 				$encrypted_given_name = estring($_SESSION['given_name']);
 			}
 
+			// https://www.w3schools.com/php/php_error.asp
+			function errorDisplay($error_number, $error_string)
+			{
+				echo '<script>console.log("Error #'.$error_number.': '.$error_string.'");</script>';
+			}
+			
+			set_error_handler("errorDisplay");
 
 	
 			//echo estring('anonrobot@robot.com');

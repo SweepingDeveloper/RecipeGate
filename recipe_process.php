@@ -49,7 +49,51 @@ foreach ($fields as $x)
 	}		
 	else if (substr($x,-8) == "quantity")
 	{
-		array_push($ingredient_quantity, $_POST[$x]);
+		//******************START CHAT GPT CODE********************
+
+		// Get the user input
+		$input = $_POST[$x];
+
+		// Remove extra whitespace
+		$input = trim($input);
+
+		// Initialize the result
+		$result = 0;
+
+		// Check if the input is a valid mixed fraction format
+		if (preg_match('/^(\d+)\s+(\d+)\/(\d+)$/', $input, $matches)) {
+			$whole = (float)$matches[1]; // Whole number part
+			$numerator = (float)$matches[2]; // Numerator
+			$denominator = (float)$matches[3]; // Denominator
+
+			if ($denominator != 0) {
+				$fraction = $numerator / $denominator;
+				$result = $whole + $fraction;
+			}
+		} elseif (preg_match('/^(\d+)\/(\d+)$/', $input, $matches)) {
+			// Handle input as a proper fraction (no whole number)
+			$numerator = (float)$matches[1];
+			$denominator = (float)$matches[2];
+
+			if ($denominator != 0) {
+				$result = $numerator / $denominator;
+			}
+		} elseif (is_numeric($input)) {
+			// Handle input as a whole number or decimal
+			$result = (float)$input;
+		}
+
+		// Round to 2 decimal places
+		$result = round($result, 2);
+
+		//******************END CHAT GPT CODE********************
+
+		
+		array_push($ingredient_quantity, $result);
+		
+		
+		
+		
 	}
 	else if (substr($x, -4) == "unit")
 	{
@@ -168,7 +212,7 @@ else
 	for ($a = 0; $a < sizeof($ingredient_name); $a++)
 	{
 		$stmt = $db->prepare('INSERT INTO `test`.`ingredients` (`recipe_id`, `quantity`, `type`, `name`) VALUES (?, ?, ?, ?);');
-		$stmt->bind_param("iiss", $recipe_id,$ingredient_quantity[$a], $ingredient_unit[$a], $ingredient_name[$a]);
+		$stmt->bind_param("idss", $recipe_id,$ingredient_quantity[$a], $ingredient_unit[$a], $ingredient_name[$a]);
 		$stmt->execute();
 		
 	}
